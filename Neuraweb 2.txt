@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuraWeb - Your Digital Assistant</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    header {
+      background-color: #00bcd4;
+      padding: 10px;
+      color: white;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style-type: none;
+    }
+
+    nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    #chat-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      height: 400px;
+      overflow-y: auto;
+    }
+
+    .chat-bubble {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .user {
+      background-color: #f1f1f1;
+      text-align: left;
+    }
+
+    .assistant {
+      background-color: #00bcd4;
+      color: white;
+      text-align: right;
+    }
+
+    #input-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    #user-input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    #send-btn {
+      width: 15%;
+      background-color: #00bcd4;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #typing-indicator {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background-color: #00bcd4;
+      animation: blink 1.5s infinite step-start;
+    }
+
+    .dot:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Chat Window -->
+  <main>
+    <div id="chat-container">
+      <!-- Chat Bubbles Go Here -->
+    </div>
+    
+    <div id="typing-indicator" class="hidden">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+
+    <!-- Input Section -->
+    <div id="input-container">
+      <input type="text" id="user-input" placeholder="Ask NeuraWeb..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </main>
+
+  <script>
+    // Select DOM elements
+    const sendButton = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const chatContainer = document.getElementById('chat-container');
+    const typingIndicator = document.getElementById('typing-indicator');
+
+    // Function to add user and assistant messages to the chat
+    function addMessage(content, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('chat-bubble', sender);
+      messageDiv.textContent = content;
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Function to simulate typing and response
+    function showTypingIndicator() {
+      typingIndicator.classList.remove('hidden');
+      setTimeout(() => {
+        typingIndicator.classList.add('hidden');
+        addMessage('NeuraWeb’s response goes here...', 'assistant'); // Placeholder response
+      }, 2000); // Simulate typing for 2 seconds
+    }
+
+    // Event listener for the send button
+    sendButton.addEventListener('click', () => {
+      const userText = userInput.value;
+      if (userText.trim() !== '') {
+        addMessage(userText, 'user');
+        userInput.value = ''; // Clear the input
+        showTypingIndicator();
+      }
+    });
+  </script>
+
+</body>
+</html>
