@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuraWeb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        #chat-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+        .chat-box {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            background-color: #fafafa;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>NeuraWeb AI Assistant</h1>
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+        <input type="text" id="user-input" placeholder="Ask me anything..." onkeyup="checkInput(event)">
+    </div>
+
+    <script>
+        function checkInput(event) {
+            if (event.key === "Enter") {
+                let userInput = document.getElementById("user-input").value;
+                if (userInput) {
+                    addMessage(userInput, 'user');
+                    document.getElementById("user-input").value = '';
+                    getBotResponse(userInput);
+                }
+            }
+        }
+
+        function addMessage(message, sender) {
+            let chatBox = document.getElementById("chat-box");
+            let newMessage = document.createElement("p");
+            newMessage.textContent = (sender === 'user' ? "You: " : "NeuraWeb: ") + message;
+            newMessage.style.color = sender === 'user' ? '#0066cc' : '#333';
+            chatBox.appendChild(newMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getBotResponse(userInput) {
+            // Simple AI response logic for now
+            let botResponse = "I'm sorry, I can't answer that yet.";
+            if (userInput.toLowerCase().includes("hello")) {
+                botResponse = "Hi there! How can I assist you today?";
+            }
+            addMessage(botResponse, 'bot');
+        }
+    </script>
+</body>
+</html>
